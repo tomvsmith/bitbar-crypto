@@ -4,7 +4,7 @@ require "json"
 class Crypto
   def initialize(symbol = :eth, source = :bitfinex)
     throw ArgumentError("Invalid Symbol") if ![:eth, :btc, :bch].include? symbol
-    throw ArgumentError("Invalid Source") if ![:bitfinex, :kraken, :bitstamp].include? source
+    throw ArgumentError("Invalid Source") if ![:bitfinex, :kraken, :bitstamp, :cryptocompare].include? source
 
     @@symbol = symbol
     @@source = source
@@ -42,6 +42,10 @@ class Crypto
       res = %x(curl -s "https://www.bitstamp.net/api/v2/ticker/#{cur}usd/")
       res_obj = JSON.parse(res)
       price = res_obj['ask']
+    when :cryptocompare
+      res = %x(curl -s "https://min-api.cryptocompare.com/data/price?fsym=#{cur}&tsyms=USD")
+      res_obj = JSON.parse(res)
+      price = res_obj['USD']
     end
 
     price # str

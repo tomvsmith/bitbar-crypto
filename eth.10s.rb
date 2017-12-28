@@ -9,6 +9,6 @@
 # <bitbar.abouturl>http://yaz.in/</bitbar.abouturl>
 
 require_relative("./.crypto.rb")
-eth = Crypto.new(:eth, :bitstamp)
+eth = Crypto.new(:eth, :cryptocompare)
 
 puts "#{eth.refresh} | templateImage=#{eth.logo}"
